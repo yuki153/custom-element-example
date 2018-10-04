@@ -1,0 +1,144 @@
+<?php
+    // Author: fujino-yuki_des-fe
+    // Production date: 2017/12/14
+?>
+
+<template id="carousel_banner">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+            list-style: none;
+            line-height: 1;
+        }
+        :host {
+            position: relative;
+            display: block;
+            width: 100%;
+            background-color: #000;
+            color: #fff;
+            font-size: 18px;
+            overflow: hidden;
+        }
+        .carousel_list {
+            font-size: 0;
+            height: 300px;
+            width:2000px;
+        }
+        .carousel_item {
+            position: absolute;
+            font-size: 18px;
+            height: 100%;
+            transform: translateX(calc(-50%));
+            left: 50%;
+            transition: .4s;
+        }
+        .next {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: red;
+            width: 40px;
+            height: 40px;
+        }
+        .prev {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: red;
+            width: 40px;
+            height: 40px;
+        }
+    </style>
+    <header>
+        <ul class="carousel_list">
+            <li class="carousel_item"><slot name="image01"></slot></li>
+            <li class="carousel_item"><slot name="image02"></slot></li>
+            <li class="carousel_item"><slot name="image03"></slot></li>
+            <li class="carousel_item"><slot name="image04"></slot></li>
+            <li class="carousel_item"><slot name="image05"></slot></li>
+            <li class="carousel_item"><slot name="image06"></slot></li>
+            <li class="carousel_item"><slot name="image07"></slot></li>
+            <li class="carousel_item"><slot name="image08"></slot></li>
+            <li class="carousel_item"><slot name="image09"></slot></li>
+            <li class="carousel_item"><slot name="image10"></slot></li>
+        </ul>
+        <ul>
+            <li class="next">次へ</li>
+            <li class="prev">前へ</li>
+        </ul>
+    </header>
+</template>
+
+
+<script>
+    class carouselBanner extends HTMLElement {
+        constructor() {
+            super();
+            const this_document = document.currentScript.ownerDocument;
+            const shadowRoot = this.attachShadow({mode:'open'});
+            const tamplate = this_document.getElementById('carousel_banner').content;
+            //shadowRoot.appendChild(document.importNode(tamplate, true));
+            shadowRoot.appendChild(tamplate.cloneNode(true));
+            console.log(document.querySelector('carousel-banner').children[0].getAttribute('slot'));
+            var b = document.querySelector('carousel-banner');
+            var a = document.querySelector('carousel-banner').children.length;
+            var slotName = ''
+            for (var i=0; i < a; i++) {
+                var attrText = b.children[i].getAttribute('slot');
+                if(i !== a-1) {
+                    slotName += attrText + '|';
+                } else {
+                    slotName += attrText + '';
+                }
+            }
+            var regExp = new RegExp(slotName);
+            console.log(regExp);
+            console.log(b.shadowRoot.querySelectorAll('slot').length);
+            console.log(b.shadowRoot.querySelectorAll('slot')[0].parentElement);
+            console.log(b.shadowRoot.querySelectorAll('.carousel_item')[0].children[0].getAttribute('name'))
+            var test_02 = b.shadowRoot.querySelectorAll('slot').length;
+            var test_03 = b.shadowRoot.querySelectorAll('slot');
+            console.log(test_03[0])
+            for (var i = 0; i < test_02; i++) {
+                
+                if (regExp.test(test_03[i].getAttribute('name'))) {
+                    console.log('ok');
+                } else {
+                    console.log(b.shadowRoot.querySelector('.carousel_list').removeChild(test_03[i].parentElement));
+                }
+            }
+            const IMG_WIDTH = b.querySelector('img').clientWidth;
+            for (var i=0; i < b.shadowRoot.querySelectorAll('.carousel_item').length; i++){
+                if (i !== 0){
+                b.shadowRoot.querySelectorAll('.carousel_item')[i].style.transform = "translateX(calc(-50% + "+IMG_WIDTH*i+"px))";
+                } else {
+                    b.shadowRoot.querySelectorAll('.carousel_item')[i].style.transform = "translateX(calc(-50%))";
+                }
+            }
+            var move_count = 0;
+            b.shadowRoot.querySelector('.next').addEventListener('click',function(){
+                if (move_count < b.shadowRoot.querySelectorAll('.carousel_item').length -1) {
+                    move_count += 1;
+                    console.log('next_click');
+                    for (var i=0; i < b.shadowRoot.querySelectorAll('.carousel_item').length; i++){
+                        b.shadowRoot.querySelectorAll('.carousel_item')[i].style.transform += "translateX(-"+IMG_WIDTH+"px)"
+                    }
+                }
+            })
+            b.shadowRoot.querySelector('.prev').addEventListener('click',function(){
+                if (move_count !== 0) {
+                    console.log('prev_click');
+                    move_count += -1;
+                    for (var i=0; i < b.shadowRoot.querySelectorAll('.carousel_item').length; i++){
+                        b.shadowRoot.querySelectorAll('.carousel_item')[i].style.transform += "translateX("+IMG_WIDTH+"px)"
+                    }
+                }
+            })
+        }
+    }
+    window.customElements.define('carousel-banner', carouselBanner);
+</script>

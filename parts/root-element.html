@@ -1,0 +1,28 @@
+<template id="root">
+    <compact-menu></compact-menu>
+    <nav_menu-5row></nav_menu-5row>
+    <carousel-banner>
+        <img src="parts/img/image01.jpg" alt="" slot="image01" height="100%">
+        <img src="parts/img/image02.jpg" alt="" slot="image02" height="100%">
+        <img src="parts/img/image03.jpg" alt="" slot="image03" height="100%">
+        <img src="parts/img/image04.jpg" alt="" slot="image04" height="100%">
+        <img src="parts/img/image05.jpg" alt="" slot="image05" height="100%">
+    </carousel-banner>
+</template>
+
+
+<script>
+    class RootElement extends HTMLElement {
+        constructor() {
+            super();
+            const this_document = document.currentScript.ownerDocument;
+            const root = this_document.getElementById('root').content;
+            //this.appendChild(document.importNode(root, true));
+            this.appendChild(root.cloneNode(true));
+        }
+    }
+    window.customElements.define('root-element', RootElement);
+</script>
+<link rel="import" href="nav_menu-5row.html">
+<link rel="import" href="compact-menu.html">
+<link rel="import" href="carousel-banner.html">

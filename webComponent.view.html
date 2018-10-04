@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <title>custom-element_view</title>
+    <!--下記を読むとchromeとsafariで動作しなくなる firefoxに至っては丸でページを読んでくれない-->
+    <!--<script src="bower_components/webcomponentsjs/custom-elements-es5-adapter.js"></script>-->
+    <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+    <link rel="import" href="./parts/root-element.html">
+    <style>
+        compact-menu {
+            float: left;
+            margin-right: 4px;
+            --compact-menu_background-color: #ccc;
+            --compact-menu_hover_background-color: #bbb;
+            --compact-menu_hover_width: 240px;
+            --compact-menu_hover_height: 500px;
+            --compact-menu_hover_padding: 25px 0;
+            --compact-menu_color: #fff;
+            --compact-menu_border-bottom: 1px solid #fff;
+            --compact-menu_hover_color: #333;
+            --compact-menu_hover_border-bottom: 1px solid #666;
+            --compact-menu_before_background:repeating-linear-gradient(0deg, white 0, white 6px, transparent 6px, transparent 12px);
+        }
+        nav_menu-5row {
+            float: left;
+            width: calc(100% - 54px);
+            margin-bottom: 4px;
+            --menu-5row_color: #fff;
+            --menu-5row_hover_color: #333;
+            --menu-5row_background-color: #ccc;
+            --menu-5row_font-weight: bold;
+            --menu-5row_hover_background-color: #bbb;
+            --menu-5row_width: 100%;
+        }
+        carousel-banner {
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <root-element id="root"></root-element>
+    <script>
+    window.addEventListener('WebComponentsReady', function() {
+        console.log('ready!!');
+        //console.log(document.querySelector('carousel-banner').shadowRoot.getElementsByClassName('carousel-item'));
+        //console.log(document.querySelector('carousel-banner'));
+        //console.log(document.querySelector('carousel-banner').shadowRoot.querySelector('carousel_item'));
+    });
+    </script>
+</body>
+</html>
+<!-- firefox-bug??
+https://github.com/devpunks/snuggsi/issues/137#event-1224168461
+-->

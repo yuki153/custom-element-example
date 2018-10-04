@@ -1,0 +1,84 @@
+<?php
+    // Author: fujino-yuki_des-fe
+    // Production date: 2017/12/14
+?>
+
+<template id="navMenu_5row">
+    <style>
+        :host {
+            display: block;
+            font-size: 14px;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-decoration: none;
+        }
+        li:hover {
+            background-color: var(--menu-5row_hover_background-color, #5a4f13);
+        }
+        li:hover a {
+            color: var(--menu-5row_hover_color);
+        }
+        ul {
+            display: flex;
+            font-size: var(--menu-5row_font-size, 1em);
+            width: var(--menu-5row_width, 100%);
+            height: var(--menu-5row_height, 50px)
+        }
+        li {
+            background-color: var(--menu-5row_background-color, #837422);
+            width: 20%;
+            height: var(--menu-5row_height, 50px);
+            line-height: var(--menu-5row_line-height, 50px);
+            margin-right: 4px;
+            overflow: hidden;
+            text-align: center;
+        }
+        li:last-child {
+            margin: 0;
+        }
+        li a{
+            display: block;
+            height: 100%;
+            color: var(--menu-5row_color, #fff);
+            font-weight: var(--menu-5row_font-weight, normal)
+        }
+    </style>
+    <nav>
+        <ul>
+            <li><a href="">MENU1</a></li>
+            <li><a href="">MENU2</a></li>
+            <li><a href="">MENU3</a></li>
+            <li><a href="">MENU4</a></li>
+            <li><a href="">MENU5</a></li>
+        </ul>
+    </nav>
+</template>
+
+
+<script>
+    class Nav_menu5row extends HTMLElement {
+        /*static get observedAttributes() {return['hoge'];}
+        get attr() {
+            return this.getAttribute('hoge');
+        }
+        set attr(val) {
+            if(val){
+                this.setAttribute('hoge',val);
+            } else {
+                this.removeAttribute('hoge');
+            }
+        }*/
+        constructor() {
+            super();
+            const this_document = document.currentScript.ownerDocument;
+            const shadowRoot = this.attachShadow({mode:'open'});
+            const tamplate = this_document.getElementById('navMenu_5row').content;
+            //shadowRoot.appendChild(document.importNode(tamplate, true));
+            shadowRoot.appendChild(tamplate.cloneNode(true));
+        }
+    }
+    window.customElements.define('nav_menu-5row', Nav_menu5row);
+</script>

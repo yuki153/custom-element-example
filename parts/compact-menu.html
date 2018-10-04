@@ -1,0 +1,111 @@
+<?php
+    // Author: fujino-yuki_des-fe
+    // Production date: 2017/12/14
+?>
+
+<template id="compact_menu">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+            list-style: none;
+            line-height: 1;
+        }
+        :host {
+            position: relative;
+            font-size: 16px;
+            width: 50px;
+            height: 50px;
+        }
+        ul {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: var(--compact-menu_width, 50px);
+            height: var(--compact-menu_height, 50px);
+            background-color: var(--compact-menu_background-color);
+            transition: .3s;
+            z-index: 10;
+        }
+        ul::before{
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            transform: translate(-50%,-50%);
+            top: 50%;
+            left: 50%;
+            background-image: var(--compact-menu_before_background);
+            z-index: 10;
+            content: '';
+        }
+        li {
+            position: relative;
+            display: none;
+            height: 20%;
+        }
+        li span {
+            position: absolute;
+            transform: translate(-100%,-50%);
+            top: 50%;
+            left: 0;
+            padding: 10px 10px 0 50px;
+            border-bottom: var(--compact-menu_border-bottom);
+            color: var(--compact-menu_color);
+            cursor: pointer;
+        }
+        li span:hover {
+            /*background-image: linear-gradient( 0deg, rgba(255,255,255,0.4) 1%, transparent );*/
+            border-bottom: var(--compact-menu_hover_border-bottom);
+            color: var(--compact-menu_hover_color);
+            
+        }
+        ul:hover {
+            width: var(--compact-menu_hover_width);
+            height: var(--compact-menu_hover_height);
+            padding: var(--compact-menu_hover_padding);
+            background-color: var(--compact-menu_hover_background-color);
+        }
+        ul:hover::before {
+            display: none;
+        }
+        ul:hover li{
+            display: block;
+        }
+        ul:hover span{
+            animation: TextMove .2s ease .3s forwards;
+        }
+        @keyframes TextMove {
+            0% {
+                transform: translate(-100%,-50%);
+            }
+            100% {
+                transform: translate(0,-50%);
+            }
+        }
+    </style>
+    <aside>
+        <ul>
+            <li><span>SIDE_MENU1</span></li>
+            <li><span>SIDE_MENU2</span></li>
+            <li><span>SIDE_MENU3</span></li>
+            <li><span>SIDE_MENU4</span></li>
+            <li><span>SIDE_MENU5</span></li>
+        </ul>
+    </aside>
+</template>
+
+
+<script>
+    class compactMenu extends HTMLElement {
+        constructor() {
+            super();
+            const this_document = document.currentScript.ownerDocument;
+            const shadowRoot = this.attachShadow({mode:'open'});
+            const tamplate = this_document.getElementById('compact_menu').content;
+            //shadowRoot.appendChild(document.importNode(tamplate, true));
+            shadowRoot.appendChild(tamplate.cloneNode(true));
+        }
+    }
+    window.customElements.define('compact-menu', compactMenu);
+</script>
